@@ -11,6 +11,7 @@ import os
 import io
 import logging
 import pkg_resources
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -158,20 +159,19 @@ def fix_duplicate_investigation_points(borehole_id, res):
 
 
 def parse(input_filename, borehole_id=None):
+    if not isinstance(input_filename, Path):
+        input_filename = Path(input_filename)
+
     if borehole_id is None:
-        if isinstance(input_filename, str):
-            borehole_id = input_filename.split("/")[-1].split(".", 1)[0]
+        borehole_id = input_filename.name.split(".", 1)[0]
 
     def load(f):
         f=codecs.getreader('utf8')(f, errors='ignore')
         data = f.readlines()
         return [l.strip() for l in data]
         
-    if isinstance(input_filename, str):
-        with open(input_filename, "rb") as f:
-            data = load(f)
-    else:
-        data = load(input_filename)
+    with open(input_filename, "rb") as f:
+        data = load(f)
 
     x, y, z, asterisk_lines = parse_coordinates_asterisk_lines(data)
 
@@ -218,7 +218,7 @@ def parse(input_filename, borehole_id=None):
                 "y_coordinate": y,
                 "z_coordinate": z,
                 "investigation_point": borehole_id,
-                "input_filename": input_filename.name if hasattr(input_filename,'name') else input_filename
+                "input_filename": input_filename.name
             }],
             "data": df_data,
         })
