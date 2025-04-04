@@ -134,7 +134,8 @@ def parse_borehole_data(data, method_code, asterisk_lines,asterisk_line_idx, bor
                 df_data.loc[:, method_by_code[method_code]+'_Col'+str(i)] = [float(x[i]) for x in raw_data_nestedlist]
         # todo: Set 0 values for resistivity in R-CPT Data to a dummy value (np.nan or -9999?). CCh, 2020-03-06
 
-        depth_increment = df_data.depth[1] - df_data.depth[0] #todo: depth increment not being properly read for CPT data
+        if "depth" in df_data.columns and len(df_data) > 1:
+            depth_increment = df_data.depth.iloc[1] - df_data.depth.iloc[0] #todo: depth increment not being properly read for CPT data
 
         method_flags = methods.loc[method_code, "flags"]
         if method_flags:
