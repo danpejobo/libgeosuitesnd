@@ -223,7 +223,7 @@ def parse(input_filename, borehole_id=None):
             "data": df_data,
         })
 
-    if len(res)<1:
+    if len(res) < 1:
         res = [{
             "main": [{
                 "x_coordinate": x,
@@ -232,6 +232,7 @@ def parse(input_filename, borehole_id=None):
                 "investigation_point": borehole_id,
                 "input_filename": input_filename.name
             }],
+            "data": pd.DataFrame()  # always include an empty DataFrame
         }]
 
     if len(res)>1:
