@@ -232,7 +232,6 @@ def parse(input_filename, borehole_id=None):
                 "investigation_point": borehole_id,
                 "input_filename": input_filename.name
             }],
-            "data": pd.DataFrame()  # always include an empty DataFrame
         }]
 
     if len(res)>1:
