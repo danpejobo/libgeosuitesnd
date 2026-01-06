@@ -24,10 +24,12 @@ def _read_csv(f):
 
 with files("libgeosuitesnd").joinpath("methods.csv").open("rb") as f:
     methods = _read_csv(f)
-    # ...
+    method_by_code = methods["name"]
+
 with files("libgeosuitesnd").joinpath("stop_reasons.csv").open("rb") as f:
     stop_reasons = _read_csv(f)
-    # ...
+    stop_reason_by_code = stop_reasons["name"]
+
 with files("libgeosuitesnd").joinpath("flags.csv").open("rb") as f:
     flags = _read_csv(f)
 
